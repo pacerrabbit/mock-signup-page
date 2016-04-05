@@ -1,7 +1,9 @@
 #!python2.7
 
+# Standard libs
+import hashlib
+
 # Third party libs
-import bcrypt
 from flask import Flask
 from flask import abort
 from flask import redirect
@@ -43,7 +45,9 @@ def do_signup():
     # TODO: Finish validating the inputs
 
     # Hash password for storage
-    password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    # Note: SHA is not secure as a password hashing algorithm. Don't actually
+    # use it for password hashing in real life.
+    password_hash = hashlib.sha512(password).hexdigest()
 
     # Create user record
     user = User.create(username, email, password_hash)
